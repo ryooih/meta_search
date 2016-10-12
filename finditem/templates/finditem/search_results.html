@@ -1,0 +1,88 @@
+<html>
+       <head>
+        <title>Find your item</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+            $("#search_button").click(function(){
+                var $keyword = $("#id_keyword").val();
+                var $site = $("#site_select option:selected").val();
+                if ($keyword == ""){
+                    alert("검색어를 입력해주세요");
+                }
+                else {
+                    window.open("/search?site="+$site+"&keyword="+$keyword);
+                }
+            });
+        });
+            function equalHeight(group) {    
+                var tallest = 0;    
+                group.each(function() {       
+                    var thisHeight = $(this).height();       
+                    if(thisHeight > tallest) {          
+                        tallest = thisHeight;       
+                    }    
+                });    
+                group.each(function() { $(this).height(tallest); });
+            } 
+
+            $(document).ready(function() {   
+                equalHeight($(".thumbnail")); 
+            }); 
+        </script>
+
+        <style type = "text/css">
+        </style>
+    </head>
+        <body>
+            <nav class="navbar navbar-default navbar-fixed-top">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                    <li><a href="http://{{ host }}/search?site={{ items.search_area }}&keyword={{ items.keyword }}&sort=1">낮은 가격순</a></li>
+                    <li><a href="http://{{ host }}/search?site={{ items.search_area }}&keyword={{ items.keyword }}&sort=2">높은 가격순</a></li>
+                  </ul>
+                  <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                      <select class="form-control" id="site_select">
+                        <option value = "total">모든 사이트</option>
+                        <option value = "hns">홈앤쇼핑</option>
+                        <option value = "cj">CJmall</option>
+                        <option value = "gs">GSshop</option>
+                      </select>
+                      <input type="text" class="form-control" id="id_keyword" placeholder="상품명(ex. 선풍기)">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="search_button" type="button">검색하기</button>
+                  </form>
+                </div>
+              </div>
+            </nav>
+            <br><br><br>
+            <h1 class="text-center">{{items.keyword}}<small>에 관한 상품이 총 </small>{{items.total_products_num}}<small>건 검색 되었습니다</small></h1>
+            <br>
+            <div class="row">
+            {% for item in items.results %}
+                  <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                      <a href = {{ item.src }} class="tumbnail"><img src={{ item.img_src }} style="height:250px;"></img></a>
+
+                      <div class="caption text-center">  
+                        <h3><small>[{{ item.mallname }}]</small></h3>
+                        <a href = {{ item.src }}><h4>{{ item.itemName }}</h4></a>
+                        <h4 class="price">{{ item.price }}원</h4>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor %}
+            </div>
+        </body>
+    </html>

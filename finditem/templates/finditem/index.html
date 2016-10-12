@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Find your item</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+		<script>
+			$(document).ready(function(){
+			$("#search_button").click(function(){
+				var $keyword = $("#id_keyword").val();
+				var $site = $("#site_select option:selected").val();
+				if ($keyword == ""){
+					alert("검색어를 입력해주세요");
+				}
+				else {
+					window.open("/search?site="+$site+"&keyword="+$keyword);
+				}
+			});
+		});
+		</script>
+
+		<style type = "text/css">
+		.search-wrapper {margin: 280px 0px;}
+		</style>
+	</head>
+
+
+	<body>
+		<h4> <small> &nbsp;&nbsp;made by</small> ilhan </h4>
+		<div class="search-wrapper">
+			<div class="intro">
+				<h1 class="text-center">찾고자 하는 TV 홈쇼핑 상품명을 입력해주세요</h1>
+				<br></br>
+			</div>
+		
+			<form class="form-inline text-center">
+				<div class="form-group">
+					<select class="form-control" id="site_select">
+						<option value = "total">모든 사이트</option>
+						<option value = "hns">홈앤쇼핑</option>
+						<option value = "cj">CJmall</option>
+						<option value = "gs">GSshop</option>
+					</select>
+					<label>에서&nbsp;&nbsp;</label>
+					<input class="form-control" id="id_keyword" name="keyword" placeholder="상품명(ex. 선풍기)" type="text"></input>
+					<button class="btn btn-primary" id="search_button" type="button">검색하기</button>				
+				</div>
+			</form>	
+		</div>
+
+		
+	</body>
+</html>
